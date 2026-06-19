@@ -1,0 +1,4 @@
+flet
+flask
+mysql-connector-python
+werkzeug

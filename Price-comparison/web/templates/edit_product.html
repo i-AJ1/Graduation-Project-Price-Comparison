@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="container py-5">
+    <div class="card shadow-sm border-0 col-md-8 mx-auto">
+        <div class="card-header bg-info text-white"><h5>تعديل بيانات المنتج الرئيسي</h5></div>
+        <div class="card-body p-4">
+            <form action="{{ url_for('update_product', product_id=product.id) }}" method="POST">
+                <div class="mb-3">
+                    <label class="form-label">اسم المنتج</label>
+                    <input type="text" name="name" class="form-control" value="{{ product.name }}">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">رابط الصورة</label>
+                    <input type="url" name="image" class="form-control" value="{{ product.image }}">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">الفئة</label>
+                    <select name="category_id" class="form-select" required>
+                        <option value="" disabled>-- اختر الفئة --</option>
+                        {% for cat in categories %}
+                        <option value="{{ cat.id }}" {% if cat.id == product.category_id %}selected{% endif %}>{{ cat.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">الوصف</label>
+                    <textarea name="description" class="form-control" rows="4">{{ product.description }}</textarea>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <button type="submit" class="btn btn-primary">حفظ التعديلات</button>
+                    <a href="{{ url_for('admin_panel') }}" class="btn btn-secondary">إلغاء</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

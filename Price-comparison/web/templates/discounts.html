@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="text-center mb-5">
+        <h2 class="display-5 fw-bold text-danger">🔥 أقوى عروض اليوم</h2>
+        <p class="lead text-muted">وفر أموالك مع أفضل الخصومات المقارنة من كافة المتاجر</p>
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% for product in products %}
+        <div class="col">
+            <div class="card h-100 border-0 shadow-sm position-relative overflow-hidden hover-shadow">
+                <div class="bg-danger text-white position-absolute px-4 py-1" style="transform: rotate(-45deg); top: 15px; left: -25px; width: 120px; text-align: center; font-size: 12px;">
+                    وفر الآن
+                </div>
+                
+                <img src="{{ product.image }}" class="card-img-top p-4" alt="{{ product.name }}" style="height: 200px; object-fit: contain;">
+                
+                <div class="card-body">
+                    <span class="badge bg-light text-primary mb-2">{{ product.category_name }}</span>
+                    <h5 class="card-title fw-bold text-truncate">{{ product.name }}</h5>
+                    
+                    <div class="d-flex align-items-center gap-2 my-3">
+                        <span class="fs-4 fw-bold text-danger">{{ product.min_price }} ريال</span>
+                        {% if product.old_price %}
+                        <span class="text-muted text-decoration-line-through small">{{ product.old_price }} ريال</span>
+                        {% endif %}
+                    </div>
+                    
+                    <a href="{{ url_for('product', product_id=product.id) }}" class="btn btn-outline-danger w-100 rounded-pill">عرض السعر في المتاجر</a>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="col-12 text-center py-5">
+            <p class="text-muted">لا توجد عروض حالية، تفقد الصفحة لاحقاً!</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

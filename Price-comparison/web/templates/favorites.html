@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+
+{% block title %}المفضلة - مقارنة الأسعار{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <h2 class="mb-4"><i class="bi bi-heart-fill text-danger me-2"></i>قائمة مفضلاتي</h2>
+
+    {% if favorites %}
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% for product in favorites %}
+        <div class="col">
+            <div class="card h-100 shadow-sm border-0">
+                <img src="{{ product.image }}" class="card-img-top p-3" alt="{{ product.name }}" style="height: 180px; object-fit: contain;">
+                <div class="card-body">
+                    <h5 class="card-title h6">{{ product.name }}</h5>
+                    <p class="text-primary fw-bold">أقل سعر: {{ product.min_price }} ريال</p>
+                </div>
+                <div class="card-footer bg-transparent border-0 d-flex gap-2 pb-3">
+                    <a href="{{ url_for('product', product_id=product.id) }}" class="btn btn-outline-primary btn-sm flex-grow-1">عرض</a>
+                    <form action="{{ url_for('toggle_favorite', product_id=product.id) }}" method="POST" class="flex-grow-1">
+                        <button type="submit" class="btn btn-outline-danger btn-sm w-100">حذف</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="text-center py-5">
+        <i class="bi bi-heart text-muted" style="font-size: 4rem;"></i>
+        <p class="mt-3 fs-5 text-muted">قائمة المفضلة فارغة حالياً.</p>
+        <a href="{{ url_for('home') }}" class="btn btn-primary">تصفح المنتجات</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
